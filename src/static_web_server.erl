@@ -6,24 +6,20 @@
 %%  We make no guarantees that this code is fit for any purpose. 
 %%  Visit http://www.pragmaticprogrammer.com/titles/jaerlang2 for more book information.
 %%---
--module(simple_web_server).
+-module(static_web_server).
 -compile(export_all). 
 
 start() ->
     start(4000).
 
 start(Port) ->
-    %ok = application:start(crypto), %%<label id="web.app.start"/>
-    ok = application:start(ranch),  
-    ok = application:start(cowlib),  
-    ok = application:start(cowboy), %%<label id="web.app.end"/>
     N_acceptors = 10, %%<label id="web.app.acc"/>
     Dispatch = cowboy_router:compile(
 		 [
 		  %% {URIHost, list({URIPath, Handler, Opts})}
-		  {'_', [{'_', simple_web_server, []}]}  %%<label id="web.app.disp"/>
+		  {'_', [{'_', static_web_server, []}]}  %%<label id="web.app.disp"/>
 		 ]),
-    cowboy:start_http(my_simple_web_server,
+    cowboy:start_http(static_web_server,
 		      N_acceptors,       %%<label id="web.app.accu"/>
 		      [{port, Port}],
 		      [{env, [{dispatch, Dispatch}]}]

@@ -11,4 +11,11 @@
 
 me(X) ->
     io:format("echo:~p~n",[X]),
-    X.
+    modif().
+
+modif() ->
+    {struct,[{<<"ID">>, 1},
+         {<<"map">>,
+          {struct,[{<<"prenom">>,<<"Laurent">>},
+                   {<<"nom">>,<<"Deleris">>},
+                   {<<"age">>, 50}]}}]}.

@@ -5,12 +5,14 @@
   {mod, { simple_web_server_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib, 
+    cowboy
    ]},
   {env,[]},
-  {modules, ['simple_web_server','cgi_web_server']},
+  {modules, []},
 
-  {maintainers, []},
+  {maintainers, ["ldeleris"]},
   {licenses, []},
-  {links, []}
+  {links, []},
+  {build_tools,["rebar3"]}
  ]}.

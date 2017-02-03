@@ -28,13 +28,19 @@ start_link() ->
 
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    {ok, {{one_for_one, 3, 10}, 
+    {ok, {{one_for_one, 0, 1}, 
 	  [{tag1, 
-	    {simple_web_server, start, []},
+	    {static_web_server, start, []},
 	    permanent, 
 	    10000, 
 	    worker, 
-	    [simple_web_server]}
+	    [static_web_server]},
+		{tag2, 
+	    {cgi_web_server, start, []},
+	    permanent, 
+	    10000, 
+	    worker, 
+	    [cgi_web_server]}
 	  ]}}.
 
 %%====================================================================

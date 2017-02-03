@@ -18,10 +18,6 @@ start_from_shell([PortAsAtom]) ->
 %%
 
 start(Port) ->
-    %%ok = application:start(crypto),
-    ok = application:start(ranch), 
-    ok = application:start(cowlib), 
-    ok = application:start(cowboy),
     N_acceptors = 100,
     Dispatch = cowboy_router:compile(
 		 [
@@ -44,7 +40,7 @@ handle1(<<"/cgi">>, Req, State) ->
     {Args, Req1} = cowboy_req:qs_vals(Req),
     {ok, Bin, Req2} = cowboy_req:body(Req1),
     Val = mochijson2:decode(Bin),
-    Response = call(Args, modif()),
+    Response = call(Args, Val),
     Json = mochijson2:encode(Response),
     {ok, Req3} = cowboy_req:reply(200, [], Json, Req2),
     {ok, Req3, State};
@@ -68,13 +64,6 @@ read_file(Path) ->
 	_ -> ["<pre>cannot read:", File, "</pre>"]
     end.
 
-modif() ->
-    {struct,[{<<"int">>,4321},
-         {<<"string">>,<<"Laurent">>},
-         {<<"array">>,[1,2,3,<<"abc">>]},
-         {<<"map">>,
-          {struct,[{<<"one">>,<<"abc">>},
-                   {<<"two">>,1},
-                   {<<"three">>,<<"abc">>}]}}]}.
+
 
 	    
