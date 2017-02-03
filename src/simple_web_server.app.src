@@ -8,7 +8,7 @@
     stdlib
    ]},
   {env,[]},
-  {modules, ['simple_web_server']},
+  {modules, ['simple_web_server','cgi_web_server']},
 
   {maintainers, []},
   {licenses, []},
