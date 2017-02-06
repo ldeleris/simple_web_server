@@ -8,11 +8,12 @@
 %%---
 -module(websockets).
 
--export([start_link/1, 
+-export([start/0, start_link/1, 
 	 start_embedded/1,
 	 init/3,      websocket_init/3,
 	 handle/2,    websocket_handle/3, 
-	 terminate/2, terminate/3, websocket_terminate/3,
+	 terminate/2, terminate/3, terminate/4,
+	 websocket_terminate/3,
 	 websocket_info/3,
 	 append_div/3,
 	 fill_div/3
@@ -22,10 +23,10 @@
 
 -record(env, {root}).
 
+start() ->
+    web_server_start(2234, "./").
+
 start_embedded(Port) ->
-    %ok   = application:start(ssl),
-    %ok   = application:start(ranch),
-    %ok   = application:start(cowboy),
     web_server_start(Port, "./"),
     receive
 	after 
@@ -35,14 +36,6 @@ start_embedded(Port) ->
 
 start_link([PortAtom, DirAtom]=Z) ->
     io:format("Here Z=~p~n",[Z]),
-    %% io:format("code:~p~n",[code:get_path()]),
-    ok   = application:start(asn1),
-    ok   = application:start(public_key),   
-    ok   = application:start(crypto),
-    ok   = application:start(ssl),
-    ok   = application:start(ranch),  
-    ok   = application:start(cowboy),
-
     Port = list_to_integer(atom_to_list(PortAtom)),
     Dir  = atom_to_list(DirAtom),
     ok  = web_server_start(Port, Dir),
@@ -89,6 +82,7 @@ init(_, Req, E0) ->
 terminate(_,_) -> ok.
 terminate(_Reason, _Req, _State) ->
     ok.
+terminate(_,_,_,_) -> ok.
     
 handle(Req, Env) ->
 %%    Resource = path(Req),
@@ -157,6 +151,7 @@ add_slash(I, Root) ->
 
 send_page(Type, Data, Req) ->
     %%io:format("send page: ~p~n",[Data]),
+    io:format("[~p] send_page Req: ~p~n",[?MODULE,Req]),
     cowboy_req:reply(200, [{<<"Content-Type">>,
 			    list_to_binary(mime_type(Type))}],
 		     Data, Req).
@@ -170,6 +165,7 @@ classify_extension(".js")  -> js;
 classify_extension(".css") -> css;
 classify_extension(_)      -> html.
 
+mime_type(ico)     -> "image/x-icon";
 mime_type(gif)     -> "image/gif";
 mime_type(jpg)     -> "image/jpeg";
 mime_type(png)     -> "image/png";
@@ -238,7 +234,7 @@ websocket_handle({text, Msg}, Req, Pid) ->
 	    Pid ! {self(), #{ clicked => <<"stop">>}}
 	    %%Pid ! {invalidMessageNotStruct, Other}
     end,
-    {ok, Req, Pid}.
+    {ok, Req, Pid, hibernate}.
 
 websocket_info({send,Str}, Req, Pid) ->
     {reply, {text, Str}, Req, Pid, hibernate};

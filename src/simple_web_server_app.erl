@@ -16,6 +16,7 @@
 
 %% @doc Starts the application
 start() ->
+  irc:start(),
   application:ensure_all_started(simple_web_server).
 
 %% @doc Stops the application

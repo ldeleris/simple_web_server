@@ -41,7 +41,7 @@ init([]) ->
 	    10000, 
 	    worker , 
 	    [cgi_web_server]} ,
-		{tag3, 
+		{tag4, 
 	    {websockets, start_embedded, [2234]},
 	    permanent, 
 	    10000, 

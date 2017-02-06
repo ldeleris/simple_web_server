@@ -12,11 +12,11 @@
 start(Browser) ->
     Browser ! [{ cmd , append_div }, { id , scroll }, 
 	        { txt , <<"Starting Erlang shell:<br>">> }],
-    B0 = erl_eval:new_bindings(),
+    B0 = erl_eval:new_bindings(),                                
     running(Browser, B0, 1).
 running(Browser, B0, N) ->
     receive
-	{Browser, #{entry := <<"input">>, txt := Bin}} ->
+	{Browser, {struct,[{entry , <<"input">>}, {txt , Bin}]} } ->
 	    {Value, B1} = string2value(binary_to_list(Bin), B0),
 	    BV = bf("~w > <font color='red'>~s</font><br>~p<br>", 
                     [N, Bin, Value]),

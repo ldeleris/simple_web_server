@@ -13,10 +13,10 @@ start(Browser) -> running(Browser).
 
 running(Browser) ->
     receive
-	{Browser, #{entry := <<"input">>, txt := Bin} } ->
+	{Browser, {struct, [{entry , <<"input">>},{ txt , Bin}]} } ->
 	    Time = clock1:current_time(),
-	    Browser ! #{cmd => append_div, id => scroll, 
-	                txt => list_to_binary([Time, " > ", Bin, "<br>"])}
+	    Browser ! [{cmd , append_div}, {id , scroll}, 
+	                {txt , list_to_binary([Time, " > ", Bin, "<br>"])}]
     end,
     running(Browser).
 

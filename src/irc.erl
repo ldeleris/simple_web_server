@@ -7,13 +7,14 @@
 %%  Visit http://www.pragmaticprogrammer.com/titles/jaerlang2 for more book information.
 %%---
 -module(irc).
--export([start/0]).
-
+-export([start/0, start1/0]).
+ 
 start() ->
     register(irc, spawn(fun() -> start1() end)).
 
 start1() ->
     process_flag(trap_exit, true),
+    io:format("[~p] started...~n",[?MODULE]),
     loop([]).
 
 loop(L) ->

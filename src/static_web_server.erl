@@ -114,7 +114,8 @@ send_page(Type, Data, Req) ->
 reply_html(Obj, Req, Env) ->
     Req1 = send_page(html, Obj, Req),
     {ok, Req1, Env}.
-    
+
+classify_extension(".ico")  -> ico;    
 classify_extension(".gif") -> gif;
 classify_extension(".jpg") -> jpg;
 classify_extension(".png") -> png;
@@ -122,6 +123,7 @@ classify_extension(".js")  -> js;
 classify_extension(".css") -> css;
 classify_extension(_)      -> html.
 
+mime_type(ico)     -> "image/x-icon";
 mime_type(gif)     -> "image/gif";
 mime_type(jpg)     -> "image/jpeg";
 mime_type(png)     -> "image/png";
