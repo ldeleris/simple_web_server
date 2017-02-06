@@ -2,7 +2,7 @@
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { simple_web_server_app, []}},
+  {mod, { simple_web_server_app, [start, stop]}},
   {applications,
    [kernel,
     stdlib, 

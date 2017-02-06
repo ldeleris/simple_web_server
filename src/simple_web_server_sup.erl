@@ -39,8 +39,14 @@ init([]) ->
 	    {cgi_web_server, start, []},
 	    permanent, 
 	    10000, 
+	    worker , 
+	    [cgi_web_server]} ,
+		{tag3, 
+	    {websockets, start_embedded, [2234]},
+	    permanent, 
+	    10000, 
 	    worker, 
-	    [cgi_web_server]}
+	    [websockets]}
 	  ]}}.
 
 %%====================================================================

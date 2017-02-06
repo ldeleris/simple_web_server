@@ -8,15 +8,15 @@
 -->
 <script type="text/javascript" src="./jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="./websock.js"></script>
-<link rel="stylesheet" href="./clock1.css" type="text/css">
+<link rel="stylesheet" href="./interact1.css" type="text/css">
 <body>
- <h1>Test1</h1>
-  <div id="clock"></div>
-  <button id="start" class="live_button">start</button>
-  <button id="stop"  class="live_button">stop</button>
+  <h2>Interaction</h2>
+  <div id="scroll"></div>
+  <br>
+  <input id="input" class="live_input"></input>
 </body>
 <script>
 $(document).ready(function(){ 
-   connect("192.168.2.12", 2234, "test1");
+   connect("192.168.2.12", 2234, "interact1");
    });
 </script>

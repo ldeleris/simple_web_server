@@ -115,7 +115,7 @@ decoder(Options) ->
 %%      proplists, eep18 returns JSON objects as {[binary(), json_term()]}, and struct
 %%      returns them as-is.
 decode(S, Options) ->
-    json_decode(S, parse_decoder_options(Options, #decoder{})).
+    json_decode(S, parse_decoder_options(Options, #decoder{})). 
 
 %% @spec decode(iolist()) -> json_term()
 %% @doc Decode the given iolist to Erlang terms.
